@@ -8,16 +8,14 @@ trigger:
 
 pool:
   vmImage: "windows-latest"
-strategy:
-  matrix:
-    Python37:
-      python.version: '3.7'
 
 steps:
 - task: UsePythonVersion@0
   inputs:
-    versionSpec: '$(python.version)'
-  displayName: 'Use Python $(python.version)'
+    versionSpec: '3.7'
+    addToPath: true
+    architecture: 'x64'
+  displayName: 'Use Python 3.7'
 
 - script: |
     python -m pip install --upgrade pip
@@ -28,7 +26,7 @@ steps:
     pip install pytest pytest-azurepipelines
     pytest
   displayName: 'pytest'
-  - task: PublishCodeCoverageResults@1
+- task: PublishCodeCoverageResults@1  
  
   inputs:
     codeCoverageTool: "JaCoCo"
